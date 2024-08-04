@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const NodeSwordInterface = require('node-sword-interface');
 const nsi = new NodeSwordInterface();
+nsi.enableMarkup();
 
 router.get('/:moduleCode/raw/:key', (req, res) => {
   const moduleCode = req.params.moduleCode;
