@@ -21,5 +21,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Ezra Bible App api listening on port ${port}`);
+  console.log(`Ezra Bible App server listening on port ${port}`);
 });
