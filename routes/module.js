@@ -20,7 +20,7 @@ router.get('/:moduleCode/text/:key', (req, res) => {
   res.json(entry);
 });
 
-router.get('/:moduleCode/chapter/:bookCode/:chapter', (req, res) => {
+router.get('/:moduleCode/chaptertext/:bookCode/:chapter', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
   const chapter = parseInt(req.params.chapter);
@@ -29,7 +29,7 @@ router.get('/:moduleCode/chapter/:bookCode/:chapter', (req, res) => {
   res.json(chapterText);
 });
 
-router.get('/:moduleCode/book/:bookCode/:startVerseNr/:verseCount', (req, res) => {
+router.get('/:moduleCode/booktext/:bookCode/:startVerseNr/:verseCount', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
   const startVerseNr = parseInt(req.params.startVerseNr);
@@ -37,6 +37,13 @@ router.get('/:moduleCode/book/:bookCode/:startVerseNr/:verseCount', (req, res) =
 
   const bookText = nsi.getBookText(moduleCode, bookCode, startVerseNr, verseCount);
   res.json(bookText);
+});
+
+router.get('/:moduleCode/book/:bookCode/introduction', (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const bookCode = req.params.bookCode;
+  const introduction = nsi.getBookIntroduction(moduleCode, bookCode);
+  res.json(introduction);
 });
 
 router.get('/:moduleCode/books', (req, res) => {
