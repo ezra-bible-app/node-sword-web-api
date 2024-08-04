@@ -75,7 +75,7 @@ router.get('/:moduleCode/chapterversecount/:bookCode/:chapter', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
   const chapter = parseInt(req.params.chapter);
-  const chapterVerseCount = nsi.getChapterVerseCount(moduleCode, bookCode, chapter);
+  const chapterVerseCount = parseInt(nsi.getChapterVerseCount(moduleCode, bookCode, chapter));
   res.json(chapterVerseCount);
 });
 
