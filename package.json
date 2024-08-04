@@ -2,7 +2,7 @@
   "name": "ezra-bible-app-server",
   "version": "0.0.1-dev",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,7 @@
   "license": "GPL-2.0+",
   "dependencies": {
     "express": "^4.19.2",
+    "morgan": "^1.10.0",
     "node-sword-interface": "^1.0.22"
   }
 }
