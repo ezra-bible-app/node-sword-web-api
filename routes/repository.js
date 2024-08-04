@@ -8,14 +8,14 @@ router.get('/names', (req, res) => {
   res.json(repoNames);
 });
 
-router.get('/:repoName/:moduleType/languages', (req, res) => {
+router.get('/:repoName/languages/:moduleType', (req, res) => {
   const repoName = req.params.repoName;
   const moduleType = req.params.moduleType;
   const languages = nsi.getRepoLanguages(repoName, moduleType);
   res.json(languages);
 });
 
-router.get('/:repoName/:moduleType/modules', (req, res) => {
+router.get('/:repoName/modules/:moduleType', (req, res) => {
   const repoName = req.params.repoName;
   const moduleType = req.params.moduleType;
   const modules = nsi.getAllRepoModules(repoName, moduleType);

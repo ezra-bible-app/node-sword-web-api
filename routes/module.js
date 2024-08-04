@@ -38,4 +38,10 @@ router.get('/:moduleCode/book/:bookCode/:startVerseNr/:verseCount', (req, res) =
   res.json(bookText);
 });
 
+router.get('/:moduleCode/books', (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const books = nsi.getBookList(moduleCode);
+  res.json(books);
+});
+
 module.exports = router;
