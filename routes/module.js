@@ -39,7 +39,7 @@ router.get('/:moduleCode/booktext/:bookCode/:startVerseNr/:verseCount', (req, re
   res.json(bookText);
 });
 
-router.get('/:moduleCode/book/:bookCode/introduction', (req, res) => {
+router.get('/:moduleCode/bookintro/:bookCode', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
   const introduction = nsi.getBookIntroduction(moduleCode, bookCode);
