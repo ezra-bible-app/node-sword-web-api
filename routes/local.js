@@ -54,4 +54,18 @@ router.get('/referencesfromrange/:referencerange', (req, res) => {
   res.json(references);
 });
 
+router.get('/modulebookstatus/:bookCode', (req, res) => {
+  const bookCode = req.params.bookCode;
+  const allModules = nsi.getAllLocalModules('BIBLE');
+  let moduleBookStatus = {};
+
+  for (let i = 0; i < allModules.length; i++) {
+    const currentModuleName = allModules[i].name;
+    const currentModuleHasBook = nsi.moduleHasBook(currentModuleName, bookCode);
+    moduleBookStatus[currentModuleName] = currentModuleHasBook;
+  }
+
+  res.json(moduleBookStatus);
+});
+
 module.exports = router;
