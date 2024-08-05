@@ -1,5 +1,5 @@
 {
-  "name": "ezra-bible-app-server",
+  "name": "node-sword-web-api",
   "version": "0.0.1-dev",
   "description": "",
   "main": "app.js",
