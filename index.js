@@ -35,9 +35,9 @@ app.use('/local', localRoutes);
 app.use('/module', moduleRoutes);
 
 app.get('/', (req, res) => {
-  res.send('This app serves the Ezra Bible App web api!');
+  res.send('This app serves the node-sword-web-api!');
 });
 
 app.listen(port, () => {
-  console.log(`Ezra Bible App server listening on port ${port}`);
+  console.log(`node-sword-web-api server listening on port ${port}`);
 });
