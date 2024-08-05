@@ -27,4 +27,25 @@ router.get('/modules/:moduleType', (req, res) => {
   res.json(allLocalModules);
 });
 
+router.get('/strongsentry/:strongskey', (req, res) => {
+  const strongsKey = req.params.strongskey;
+  const strongsEntry = nsi.getStrongsEntry(strongsKey);
+  res.json(strongsEntry);
+});
+
+router.get('/strongsavailable', (req, res) => {
+  const strongsAvailable = nsi.strongsAvailable();
+  res.json(strongsAvailable);
+});
+
+router.get('/hebrewstrongsavailable', (req, res) => {
+  const strongsAvailable = nsi.hebrewStrongsAvailable();
+  res.json(strongsAvailable);
+});
+
+router.get('/greekstrongsavailable', (req, res) => {
+  const strongsAvailable = nsi.greekStrongsAvailable();
+  res.json(strongsAvailable);
+});
+
 module.exports = router;
