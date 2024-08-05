@@ -85,4 +85,11 @@ router.get('/:moduleCode/books', (req, res) => {
   res.json(books);
 });
 
+router.get('/:moduleCode/versesfromreferences/:references', (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const references = req.params.references.split(',');
+  const verses = nsi.getVersesFromReferences(moduleCode, references);
+  res.json(verses);
+});
+
 module.exports = router;
