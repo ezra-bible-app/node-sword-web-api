@@ -48,4 +48,10 @@ router.get('/greekstrongsavailable', (req, res) => {
   res.json(strongsAvailable);
 });
 
+router.get('/referencesfromrange/:referencerange', (req, res) => {
+  const referenceRange = req.params.referencerange;
+  const references = nsi.getReferencesFromReferenceRange(referenceRange);
+  res.json(references);
+});
+
 module.exports = router;
