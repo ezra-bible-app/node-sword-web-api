@@ -27,7 +27,7 @@ router.get('/:moduleCode/raw/:key', (req, res) => {
   const key = req.params.key;
 
   const entry = nsi.getRawModuleEntry(moduleCode, key);
-  res.send(entry);
+  res.json(entry);
 });
 
 router.get('/:moduleCode/text/:key', (req, res) => {
