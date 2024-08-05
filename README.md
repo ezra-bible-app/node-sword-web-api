@@ -1,4 +1,4 @@
-# ezra-bible-app-server
+# node-sword-web-api
 
 This is a web service based on [node-sword-interface](https://github.com/ezra-bible-app/node-sword-interface)
 and [expressjs](https://github.com/expressjs/express).
