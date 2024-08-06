@@ -22,6 +22,12 @@ const NodeSwordInterface = require('node-sword-interface');
 const nsi = new NodeSwordInterface();
 nsi.enableMarkup();
 
+router.get('/:moduleCode', (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const module = nsi.getLocalModule(moduleCode);
+  res.json(module);
+});
+
 router.get('/:moduleCode/raw/:key', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const key = req.params.key;
