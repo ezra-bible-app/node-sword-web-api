@@ -31,7 +31,6 @@ router.get('/:moduleCode', (req, res) => {
 router.get('/:moduleCode/raw/:key', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const key = req.params.key;
-
   const entry = nsi.getRawModuleEntry(moduleCode, key);
   res.json(entry);
 });
@@ -39,7 +38,6 @@ router.get('/:moduleCode/raw/:key', (req, res) => {
 router.get('/:moduleCode/text/:key', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const key = req.params.key;
-
   const entry = nsi.getReferenceText(moduleCode, key);
   res.json(entry);
 });
@@ -48,7 +46,6 @@ router.get('/:moduleCode/chaptertext/:bookCode/:chapter', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
   const chapter = parseInt(req.params.chapter);
-
   const chapterText = nsi.getChapterText(moduleCode, bookCode, chapter);
   res.json(chapterText);
 });
@@ -58,7 +55,6 @@ router.get('/:moduleCode/booktext/:bookCode/:startVerseNr/:verseCount', (req, re
   const bookCode = req.params.bookCode;
   const startVerseNr = parseInt(req.params.startVerseNr);
   const verseCount = parseInt(req.params.verseCount);
-
   const bookText = nsi.getBookText(moduleCode, bookCode, startVerseNr, verseCount);
   res.json(bookText);
 });
@@ -101,7 +97,6 @@ router.get('/:moduleCode/versesfromreferences/:references', (req, res) => {
 router.get('/:moduleCode/hasbook/:bookCode', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
-
   const moduleHasBook = nsi.moduleHasBook(moduleCode, bookCode);
   res.json(moduleHasBook);
 });
