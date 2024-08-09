@@ -24,6 +24,7 @@ const port = 3000;
 const setContentType = require('./setContentType.js');
 const localRoutes = require('./routes/local.js');
 const moduleRoutes = require('./routes/module.js');
+const strongsRoutes = require('./routes/strongs.js');
 
 app.use(morgan('tiny')); // Logging middleware
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -31,6 +32,7 @@ app.use(setContentType); // set Content-Type to application/json
 
 app.use('/local', localRoutes);
 app.use('/module', moduleRoutes);
+app.use('/strongs', strongsRoutes);
 
 app.get('/', (req, res) => {
   res.send('This app serves the node-sword-web-api!');
