@@ -27,7 +27,7 @@ module.exports.getFromWebApi = async function(url) {
     const response = await fetch(WEB_API_ROOT + url);
 
     if (!response.ok) {
-      console.error('Network response was not ok for ' + URL + ': ' + response.statusText);
+      console.error('Network response was not ok for ' + url + ': ' + response.statusText);
       return -1;
     }
 
@@ -103,4 +103,8 @@ module.exports.strongsAvailable = async function() {
 
 module.exports.getStrongsEntry = async function(strongsKey) {
   return await this.getFromWebApi(`/strongs/strongsentry/${strongsKey}`);
+};
+
+module.exports.getAllLocalModules = async function(moduleType) {
+  return await this.getFromWebApi(`/local/modules/${moduleType}`);
 };
