@@ -21,30 +21,25 @@ const router = express.Router();
 const NodeSwordInterface = require('node-sword-interface');
 const nsi = new NodeSwordInterface();
 
-router.get('/modules/:moduleType', (req, res) => {
-  const moduleType = req.params.moduleType;
-  const allLocalModules = nsi.getAllLocalModules(moduleType);
-  res.json(allLocalModules);
+router.get('/strongsentry/:strongskey', (req, res) => {
+  const strongsKey = req.params.strongskey;
+  const strongsEntry = nsi.getStrongsEntry(strongsKey);
+  res.json(strongsEntry);
 });
 
-router.get('/referencesfromrange/:referencerange', (req, res) => {
-  const referenceRange = req.params.referencerange;
-  const references = nsi.getReferencesFromReferenceRange(referenceRange);
-  res.json(references);
+router.get('/strongsavailable', (req, res) => {
+  const strongsAvailable = nsi.strongsAvailable();
+  res.json(strongsAvailable);
 });
 
-router.get('/modulebookstatus/:bookCode', (req, res) => {
-  const bookCode = req.params.bookCode;
-  const allModules = nsi.getAllLocalModules('BIBLE');
-  let moduleBookStatus = {};
+router.get('/hebrewstrongsavailable', (req, res) => {
+  const strongsAvailable = nsi.hebrewStrongsAvailable();
+  res.json(strongsAvailable);
+});
 
-  for (let i = 0; i < allModules.length; i++) {
-    const currentModuleName = allModules[i].name;
-    const currentModuleHasBook = nsi.moduleHasBook(currentModuleName, bookCode);
-    moduleBookStatus[currentModuleName] = currentModuleHasBook;
-  }
-
-  res.json(moduleBookStatus);
+router.get('/greekstrongsavailable', (req, res) => {
+  const strongsAvailable = nsi.greekStrongsAvailable();
+  res.json(strongsAvailable);
 });
 
 module.exports = router;
