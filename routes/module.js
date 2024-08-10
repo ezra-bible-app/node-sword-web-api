@@ -69,7 +69,7 @@ router.get('/:moduleCode/bookintro/:bookCode', (req, res) => {
 router.get('/:moduleCode/bookchaptercount/:bookCode', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
-  const bookChapterCount = parseInt(nsi.getBookChapterCount(moduleCode, bookCode));
+  const bookChapterCount = nsi.getBookChapterCount(moduleCode, bookCode);
   res.json(bookChapterCount);
 });
 
@@ -77,8 +77,15 @@ router.get('/:moduleCode/chapterversecount/:bookCode/:chapter', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
   const chapter = parseInt(req.params.chapter);
-  const chapterVerseCount = parseInt(nsi.getChapterVerseCount(moduleCode, bookCode, chapter));
+  const chapterVerseCount = nsi.getChapterVerseCount(moduleCode, bookCode, chapter);
   res.json(chapterVerseCount);
+});
+
+router.get('/:moduleCode/bookversecount/:bookCode', (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const bookCode = req.params.bookCode;
+  const bookVerseCount = nsi.getBookVerseCount(moduleCode, bookCode);
+  return bookVerseCount;
 });
 
 router.get('/:moduleCode/books', (req, res) => {
