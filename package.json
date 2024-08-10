@@ -11,6 +11,6 @@
   "dependencies": {
     "express": "^4.19.2",
     "morgan": "^1.10.0",
-    "node-sword-interface": "^1.0.22"
+    "node-sword-interface": "^1.0.23"
   }
 }
