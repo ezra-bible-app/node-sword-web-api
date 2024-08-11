@@ -1,7 +1,14 @@
 {
   "name": "node-sword-web-api",
   "version": "0.0.1",
-  "description": "",
+  "description": "A web-based API providing access to SWORD library functions",
+  "keywords": [
+    "SWORD",
+    "Bible study",
+    "Bible",
+    "web",
+    "api"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +19,9 @@
     "express": "^4.19.2",
     "morgan": "^1.10.0",
     "node-sword-interface": "^1.0.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ezra-bible-app/node-sword-web-api.git"
   }
 }
