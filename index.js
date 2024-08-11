@@ -81,6 +81,10 @@ module.exports.getChapterVerseCount = async function(moduleCode, bookCode, chapt
   return parseInt(await this.getFromWebApi(`/module/${moduleCode}/chapterversecount/${bookCode}/${chapter}`));
 };
 
+module.exports.getAllChapterVerseCounts = async function(moduleCode, bookCode) {
+  return parseInt(await this.getFromWebApi(`/module/${moduleCode}/allchapterversecounts/${bookCode}`));
+};
+
 module.exports.getBookVerseCount = async function(moduleCode, bookCode) {
   return parseInt(await this.getFromWebApi(`/module/${moduleCode}/bookversecount/${bookCode}`));
 };

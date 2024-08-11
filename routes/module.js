@@ -85,7 +85,14 @@ router.get('/:moduleCode/bookversecount/:bookCode', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
   const bookVerseCount = nsi.getBookVerseCount(moduleCode, bookCode);
-  return bookVerseCount;
+  res.json(bookVerseCount);
+});
+
+router.get('/:moduleCode/allchapterversecounts/:bookCode', (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const bookCode = req.params.bookCode;
+  const allChapterVerseCounts = nsi.getAllChapterVerseCounts(moduleCode, bookCode);
+  res.json(allChapterVerseCounts);
 });
 
 router.get('/:moduleCode/books', (req, res) => {
