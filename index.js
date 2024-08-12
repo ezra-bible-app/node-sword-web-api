@@ -60,6 +60,10 @@ module.exports.getBookText = async function(moduleCode, bookCode, startVerseNr=-
   return await this.getFromWebApi(`/module/${moduleCode}/booktext/${bookCode}/${startVerseNr}/${verseCount}`);
 };
 
+module.exports.getBookHeaderList = async function(moduleCode, bookCode, startVerseNr=-1, verseCount=-1) {
+  return await this.getFromWebApi(`/module/${moduleCode}/bookheaderlist/${bookCode}/${startVerseNr}/${verseCount}`);
+};
+
 module.exports.getVersesFromReferences = async function(moduleCode, references) {
   const referenceString = references.join(',');
   return await this.getFromWebApi(`/module/${moduleCode}/versesfromreferences/${referenceString}`);

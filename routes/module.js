@@ -59,6 +59,15 @@ router.get('/:moduleCode/booktext/:bookCode/:startVerseNr/:verseCount', (req, re
   res.json(bookText);
 });
 
+router.get('/:moduleCode/bookheaderlist/:bookCode/:startVerseNr/:verseCount', (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const bookCode = req.params.bookCode;
+  const startVerseNr = parseInt(req.params.startVerseNr);
+  const verseCount = parseInt(req.params.verseCount);
+  const bookHeaders = nsi.getBookHeaderList(moduleCode, bookCode, startVerseNr, verseCount);
+  res.json(bookHeaders);
+});
+
 router.get('/:moduleCode/bookintro/:bookCode', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const bookCode = req.params.bookCode;
