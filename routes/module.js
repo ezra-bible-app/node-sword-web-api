@@ -17,6 +17,7 @@
    If not, see <http://www.gnu.org/licenses/>. */
 
 const express = require('express');
+const crypto = require("crypto");
 const router = express.Router();
 const NodeSwordInterface = require('node-sword-interface');
 const nsi = new NodeSwordInterface();
@@ -108,6 +109,27 @@ router.get('/:moduleCode/books', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const books = nsi.getBookList(moduleCode);
   res.json(books);
+});
+
+router.get('/:moduleCode/search/:searchTerm/:searchType/:searchScope/:isCaseSensitive/:useExtendedVerseBoundaries', async (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const searchTerm = req.params.searchTerm;
+  const searchType = req.params.searchType;
+  const searchScope = req.params.searchScope;
+  const isCaseSensitive = req.params.isCaseSensitive === 'true';
+  const useExtendedVerseBoundaries = req.params.useExtendedVerseBoundaries === 'true';
+
+  const results = await nsi.getModuleSearchResults(
+    moduleCode,
+    searchTerm,
+    (progress) => {},
+    searchType,
+    searchScope,
+    isCaseSensitive,
+    useExtendedVerseBoundaries
+  );
+
+  res.json(results);
 });
 
 router.get('/:moduleCode/versesfromreferences/:references', (req, res) => {

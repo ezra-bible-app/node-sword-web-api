@@ -101,6 +101,20 @@ module.exports.getModuleBookStatus = async function(bookCode) {
   return await this.getFromWebApi(`/local/modulebookstatus/${bookCode}`);
 };
 
+module.exports.getModuleSearchResults = async function(moduleCode,
+                                                       searchTerm,
+                                                       progressCB,
+                                                       searchType,
+                                                       searchScope,
+                                                       isCaseSensitive,
+                                                       useExtendedVerseBoundaries) {
+
+  console.log('getModuleSearchResults');
+  const webApiUrl = `/module/${moduleCode}/search/${searchTerm}/${searchType}/${searchScope}/${isCaseSensitive}/${useExtendedVerseBoundaries}`;
+
+  return await this.getFromWebApi(webApiUrl);
+};
+
 module.exports.hebrewStrongsAvailable = async function() {
   return await this.getFromWebApi('/strongs/hebrewstrongsavailable');
 };
