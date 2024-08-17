@@ -116,6 +116,21 @@ router.get('/:moduleCode/allchapterversecounts/:bookCode', (req, res) => {
   res.json(allChapterVerseCounts);
 });
 
+router.get('/:moduleCode/bookabbreviations/:bookCodes/:localeCode', (req, res) => {
+  const moduleCode = req.params.moduleCode;
+  const bookCodes = req.params.bookCodes.split(',');
+  const localeCode = req.params.localeCode;
+
+  let abbreviations = [];
+
+  for (let i = 0; i < bookCodes.length; i++) {
+    let abbreviation = nsi.getBookAbbreviation(moduleCode, bookCodes[i], localeCode);
+    abbreviations.push(abbreviation);
+  }
+
+  res.json(abbreviations);
+});
+
 router.get('/:moduleCode/books', (req, res) => {
   const moduleCode = req.params.moduleCode;
   const books = nsi.getBookList(moduleCode);
@@ -186,8 +201,6 @@ router.get('/searchresults/:sessionId', (req, res) => {
 
   const task = global.searchTasks[sessionId];
   res.json(task.results);
-
-  delete global.searchTasks[sessionId];
 });
 
 router.get('/:moduleCode/versesfromreferences/:references', (req, res) => {

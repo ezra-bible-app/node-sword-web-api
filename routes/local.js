@@ -47,4 +47,9 @@ router.get('/modulebookstatus/:bookCode', (req, res) => {
   res.json(moduleBookStatus);
 });
 
+router.get('/swordversion', (req, res) => {
+  const version = nsi.getSwordVersion();
+  res.json(version);
+});
+
 module.exports = router;

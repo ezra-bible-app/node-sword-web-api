@@ -174,3 +174,11 @@ module.exports.getStrongsEntry = async function(strongsKey) {
 module.exports.getAllLocalModules = async function(moduleType) {
   return await this.getFromWebApi(`/local/modules/${moduleType}`);
 };
+
+module.exports.getBookAbbreviations = async function(moduleCode, bookCodes, localeCode) {
+  return await this.getFromWebApi(`/module/${moduleCode}/bookabbreviations/${bookCodes}/${localeCode}`);
+};
+
+module.exports.getSwordVersion = async function() {
+  return await this.getFromWebApi(`/local/swordversion`);
+};
