@@ -109,10 +109,29 @@ module.exports.getModuleSearchResults = async function(moduleCode,
                                                        isCaseSensitive,
                                                        useExtendedVerseBoundaries) {
 
-  console.log('getModuleSearchResults');
-  const webApiUrl = `/module/${moduleCode}/search/${searchTerm}/${searchType}/${searchScope}/${isCaseSensitive}/${useExtendedVerseBoundaries}`;
+  const moduleSearchSessionId = await this.getFromWebApi('/module/searchsession');
+  const webApiUrl = `/module/${moduleCode}/search/${moduleSearchSessionId}/${searchTerm}/${searchType}/${searchScope}/${isCaseSensitive}/${useExtendedVerseBoundaries}`;
 
-  return await this.getFromWebApi(webApiUrl);
+  this.getFromWebApi(webApiUrl);
+
+  const progressURL = `/module/searchprogress/${moduleSearchSessionId}`;
+
+  return new Promise((resolve, reject) => {
+    const checkFinishInterval = setInterval(async () => {
+
+      const progressUpdate = await this.getFromWebApi(progressURL);
+
+      if (progressUpdate.progress != null) {
+        progressCB(progressUpdate.progress);
+
+        if (progressUpdate.status === 'completed') {
+          const results = await this.getFromWebApi(`/module/searchresults/${moduleSearchSessionId}`);
+          clearInterval(checkFinishInterval);
+          resolve(results);
+        }
+      }
+    }, 200);
+  });
 };
 
 module.exports.hebrewStrongsAvailable = async function() {

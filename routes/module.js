@@ -17,11 +17,22 @@
    If not, see <http://www.gnu.org/licenses/>. */
 
 const express = require('express');
-const crypto = require("crypto");
+const crypto = require('crypto');
 const router = express.Router();
 const NodeSwordInterface = require('node-sword-interface');
 const nsi = new NodeSwordInterface();
 nsi.enableMarkup();
+
+// In-memory store for task progress and results
+global.searchTasks = {};
+
+router.get('/searchsession', (req, res) => {
+  const sessionId = crypto.randomUUID();
+  global.searchTasks[sessionId] = { progress: 0, status: 'pending', results: null };
+  
+  // Send the session ID to the client
+  res.json(sessionId);
+});
 
 router.get('/:moduleCode', (req, res) => {
   const moduleCode = req.params.moduleCode;
@@ -111,25 +122,62 @@ router.get('/:moduleCode/books', (req, res) => {
   res.json(books);
 });
 
-router.get('/:moduleCode/search/:searchTerm/:searchType/:searchScope/:isCaseSensitive/:useExtendedVerseBoundaries', async (req, res) => {
+router.get('/:moduleCode/search/:sessionId/:searchTerm/:searchType/:searchScope/:isCaseSensitive/:useExtendedVerseBoundaries', async (req, res) => {
   const moduleCode = req.params.moduleCode;
+  const sessionId = req.params.sessionId;
   const searchTerm = req.params.searchTerm;
   const searchType = req.params.searchType;
   const searchScope = req.params.searchScope;
   const isCaseSensitive = req.params.isCaseSensitive === 'true';
   const useExtendedVerseBoundaries = req.params.useExtendedVerseBoundaries === 'true';
 
-  const results = await nsi.getModuleSearchResults(
+  if (!global.searchTasks[sessionId]) {
+    return res.status(404).json({ error: 'Session not found' });
+  }
+
+  global.searchTasks[sessionId].status = 'in-progress';
+
+  nsi.getModuleSearchResults(
     moduleCode,
     searchTerm,
-    (progress) => {},
+    (progress) => {
+      global.searchTasks[sessionId].progress = progress;
+
+      if (progress.totalPercent >= 100) {
+        global.searchTasks[sessionId].status = 'completed';
+      }
+    },
     searchType,
     searchScope,
     isCaseSensitive,
     useExtendedVerseBoundaries
-  );
+  ).then((results) => {
+    global.searchTasks[sessionId].results = results;
+  });
 
-  res.json(results);
+  res.status(200);
+});
+
+router.get('/searchprogress/:sessionId', (req, res) => {
+  const { sessionId } = req.params;
+
+  if (!global.searchTasks[sessionId]) {
+    return res.status(404).json({ error: 'Session not found' });
+  }
+
+  const task = global.searchTasks[sessionId];
+  res.json({ sessionId, progress: task.progress, status: task.status });
+});
+
+router.get('/searchresults/:sessionId', (req, res) => {
+  const { sessionId } = req.params;
+
+  if (!global.searchTasks[sessionId]) {
+    return res.status(404).json({ error: 'Session not found' });
+  }
+
+  const task = global.searchTasks[sessionId];
+  res.json(task.results);
 });
 
 router.get('/:moduleCode/versesfromreferences/:references', (req, res) => {
