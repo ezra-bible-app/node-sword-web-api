@@ -40,6 +40,10 @@ module.exports.getFromWebApi = async function(url) {
   }
 };
 
+module.exports.getLocalModule = async function(moduleCode) {
+  return await this.getFromWebApi(`/module/${moduleCode}`);
+};
+
 module.exports.moduleHasBook = async function(moduleCode, bookCode) {
   return await this.getFromWebApi(`/module/${moduleCode}/hasbook/${bookCode}`);
 };
