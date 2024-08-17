@@ -117,8 +117,18 @@ module.exports.getModuleSearchResults = async function(moduleCode,
                                                        useExtendedVerseBoundaries) {
 
   const moduleSearchSessionId = await this.getFromWebApi('/module/searchsession');
-  const webApiUrl = `/module/${moduleCode}/search/${moduleSearchSessionId}/${searchTerm}/${searchType}/${searchScope}/${isCaseSensitive}/${useExtendedVerseBoundaries}`;
-  this.getFromWebApi(webApiUrl, false);
+  if (moduleSearchSessionId == -1) {
+    console.error('Could not get a search session id from the remote server!');
+    return -1;
+  }
+
+  const startSearchUrl = `/module/${moduleCode}/search/${moduleSearchSessionId}/${searchTerm}/${searchType}/${searchScope}/${isCaseSensitive}/${useExtendedVerseBoundaries}`;
+  const result = await this.getFromWebApi(startSearchUrl, false);
+
+  if (result == -1) {
+    console.error('Search operation could not be started on remote server!');
+    return -1;
+  }
 
   const progressURL = `/module/searchprogress/${moduleSearchSessionId}`;
 
@@ -126,14 +136,24 @@ module.exports.getModuleSearchResults = async function(moduleCode,
     const checkFinishInterval = setInterval(async () => {
 
       const progressUpdate = await this.getFromWebApi(progressURL);
+      if (progressUpdate == -1) {
+        console.error('Progress update for search on remote server failed!');
+        clearInterval(checkFinishInterval);
+        reject(-1);
 
-      if (progressUpdate.progress != null) {
+      } else if (progressUpdate.progress != null) {
         progressCB(progressUpdate.progress);
 
         if (progressUpdate.status === 'completed') {
           const results = await this.getFromWebApi(`/module/searchresults/${moduleSearchSessionId}`);
           clearInterval(checkFinishInterval);
-          resolve(results);
+
+          if (results == -1) {
+            console.error('Search results could not be retrieved from remote server!');
+            reject(-1);
+          } else {
+            resolve(results);
+          }
         }
       }
     }, 200);
