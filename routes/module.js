@@ -157,16 +157,13 @@ router.get('/:moduleCode/search/:sessionId/:searchTerm/:searchType/:searchScope/
     searchTerm,
     (progress) => {
       global.searchTasks[sessionId].progress = progress;
-
-      if (progress.totalPercent >= 100) {
-        global.searchTasks[sessionId].status = 'completed';
-      }
     },
     searchType,
     searchScope,
     isCaseSensitive,
     useExtendedVerseBoundaries
   ).then((results) => {
+    global.searchTasks[sessionId].status = 'completed';
     global.searchTasks[sessionId].results = results;
   });
 
