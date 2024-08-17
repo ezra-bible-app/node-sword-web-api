@@ -22,7 +22,7 @@ module.exports.setApiRoot = function(api_root) {
   WEB_API_ROOT = api_root;
 };
 
-module.exports.getFromWebApi = async function(url) {
+module.exports.getFromWebApi = async function(url, json=true) {
   try {
     const response = await fetch(WEB_API_ROOT + url);
 
@@ -31,8 +31,11 @@ module.exports.getFromWebApi = async function(url) {
       return -1;
     }
 
-    const data = await response.json(); // Parsing the JSON from the response
-    return data;
+    if (json) {
+      return await response.json(); // Parsing the JSON from the response
+    } else {
+      return 0;
+    }
 
   } catch (error) {
     console.error('There was a problem with the fetch operation:', error);
@@ -115,8 +118,7 @@ module.exports.getModuleSearchResults = async function(moduleCode,
 
   const moduleSearchSessionId = await this.getFromWebApi('/module/searchsession');
   const webApiUrl = `/module/${moduleCode}/search/${moduleSearchSessionId}/${searchTerm}/${searchType}/${searchScope}/${isCaseSensitive}/${useExtendedVerseBoundaries}`;
-
-  this.getFromWebApi(webApiUrl);
+  this.getFromWebApi(webApiUrl, false);
 
   const progressURL = `/module/searchprogress/${moduleSearchSessionId}`;
 
