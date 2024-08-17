@@ -155,7 +155,15 @@ router.get('/:moduleCode/search/:sessionId/:searchTerm/:searchType/:searchScope/
     global.searchTasks[sessionId].results = results;
   });
 
-  res.status(200);
+  // Set the connection header to close, so that the http connection is not kept alive.
+  res.set("Connection", "close");
+
+  // The 202 status code indicates that a request has been accepted for processing,
+  // but processing has not been completed or may not have started.
+  res.status(202);
+
+  // Explicitly end the response.
+  res.end();
 });
 
 router.get('/searchprogress/:sessionId', (req, res) => {
