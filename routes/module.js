@@ -186,6 +186,8 @@ router.get('/searchresults/:sessionId', (req, res) => {
 
   const task = global.searchTasks[sessionId];
   res.json(task.results);
+
+  delete global.searchTasks[sessionId];
 });
 
 router.get('/:moduleCode/versesfromreferences/:references', (req, res) => {
