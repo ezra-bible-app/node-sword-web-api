@@ -17,6 +17,7 @@
    If not, see <http://www.gnu.org/licenses/>. */
 
 const express = require('express');
+const compression = require('compression');
 const morgan = require('morgan');
 
 const app = express();
@@ -26,6 +27,7 @@ const localRoutes = require('./routes/local.js');
 const moduleRoutes = require('./routes/module.js');
 const strongsRoutes = require('./routes/strongs.js');
 
+app.use(compression());
 app.use(morgan('tiny')); // Logging middleware
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(setContentType); // set Content-Type to application/json
