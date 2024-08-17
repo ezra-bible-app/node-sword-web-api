@@ -123,12 +123,7 @@ module.exports.getModuleSearchResults = async function(moduleCode,
   }
 
   const startSearchUrl = `/module/${moduleCode}/search/${moduleSearchSessionId}/${searchTerm}/${searchType}/${searchScope}/${isCaseSensitive}/${useExtendedVerseBoundaries}`;
-  const result = await this.getFromWebApi(startSearchUrl, false);
-
-  if (result == -1) {
-    console.error('Search operation could not be started on remote server!');
-    return -1;
-  }
+  this.getFromWebApi(startSearchUrl, false);
 
   const progressURL = `/module/searchprogress/${moduleSearchSessionId}`;
 
